@@ -10,7 +10,6 @@ import os
 import numpy as np
 
 if __name__ == "__main__":
-    print ('hellow world')
     dataindex = input('please type in the index of /'
                       'test data to be evaluated')
     time = input('please define the time for bpm /'
@@ -30,5 +29,4 @@ if __name__ == "__main__":
     metrics = hrm_num_beats(peak, metrics)
     metrics = hrm_beats(peak, metrics)
     metrics = hrm_mean_hrbpm(peak, metrics, time)
-    print (metrics)
     hrm_Output(metrics, dataindex)
