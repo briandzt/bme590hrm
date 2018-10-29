@@ -11,7 +11,7 @@ def hrm_findfile(filename=-1):
     real_path = 'Test_data'
     act_path = os.path.join(script_dir, real_path)
     filelist = []
-    if filename == -1:
+    if filename == -1 or filename == '-1':
         script_dir = os.path.dirname(__file__)
         real_path = 'Test_data'
         act_path = os.path.join(script_dir, real_path)
@@ -20,11 +20,11 @@ def hrm_findfile(filename=-1):
             if (hrm_checkinput(os.path.join(act_path, file))):
                 filelist.append(file)
     else:
-        if [filename[-4:-1]+filename[-1]] != '.csv':
+        if (filename[-4:-1]+filename[-1]) != '.csv':
             filename = filename+'.csv'
-        filename = os.path.join(act_path, filename)
-        if os.path.isfile(filename) and hrm_checkinput(filename):
-            filelist.append(os.path.join(act_path, filename))
+        filename1 = os.path.join(act_path, filename)
+        if os.path.isfile(filename1) and hrm_checkinput(filename1):
+            filelist.append(filename)
         else:
             logging.error('Specified file not exist')
             raise ImportError('The specified name of the file cannot be find')

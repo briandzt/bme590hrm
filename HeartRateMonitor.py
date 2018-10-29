@@ -16,7 +16,7 @@ if __name__ == "__main__":
                         datefmt='%m/%d/%Y %I:%M:%S %p')
     filename = input('please type in the index of test data'
                      ' to be evaluated. Enter -1 to scan all data. ')
-    time = input('please define the time for bpm /'
+    time = input('please define the time for bpm '
                  'calculation. ')
     filelist = hrm_findfile(filename)
     for i in filelist:
@@ -39,4 +39,4 @@ if __name__ == "__main__":
         logging.info('peak time recorded')
         metrics = hrm_mean_hrbpm(peak, metrics, time)
         logging.info('mean bpm recorded')
-        hrm_Output(metrics, filename)
+        hrm_Output(metrics, i)
