@@ -10,7 +10,6 @@ import numpy as np
                                        (np.array([[0.5, 0]]),
                                         0.5),
                                        ])
-
 def test_hrm_duration(truegroup):
     from hrm_duration import hrm_duration
     metrics = {
