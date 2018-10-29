@@ -12,9 +12,6 @@ def find_peak(data):
     voltage = sci.savgol_filter(voltage1, 3, 2)
     histv = np.histogram(voltage1, bins=10)
     revflag = 0
-    print (sum(histv[0][0:5]))
-    print(histv)
-    print(np.mean(voltage))
     if sum(histv[0][0:5]) < sum(histv[0][5:10]):
         revflag = 1
         threv = maxv - (maxv - minv) * 2 / 3
