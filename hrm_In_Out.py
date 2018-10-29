@@ -1,7 +1,11 @@
 def hrm_Input(filename):
+    import logging
     import numpy as np
     import warnings
     import os
+    logging.basicConfig(filename="Inlog.txt",
+                        format='%(asctime)s %(message)s',
+                        datefmt='%m/%d/%Y %I:%M:%S %p')
     script_dir = os.path.dirname(__file__)
     real_path = 'Test_data'
     act_path = os.path.join(script_dir, real_path)
@@ -16,26 +20,39 @@ def hrm_Input(filename):
             wronginput.append(i)
     my_data = np.delete(my_data, wronginput, 0)
     if my_data.size == 0:
+        logging.debug('No valid entry for the whole file '+filename)
         raise ValueError("The selected file has no valid data entry")
     if my_data.size < (previous_size / 2):
         warnings.warn('Over 50% of the entries within the data is unreadable')
+        logging.debug('Over 50% of the entries within the data is unreadable')
     print('INFO: Assigning {0} sets of data to /'
           'from {1}'.format(my_data.size, filename))
+    logging.info('INFO: Assigning {0} sets of data to'
+                 ' from {1}'.format(my_data.size, filename))
+    if np.unique(my_data[1]).size == 1:
+        logging.debug('"The input data has uniform input"')
+        raise ValueError("The input data has uniform input, please check if"
+                         "the data is a valid ECG data file")
     return my_data
 
 
 def hrm_Output(outdata, filename):
     import json
     import os
+    import logging
+    logging.basicConfig(filename="Outlog.txt",
+                        format='%(asctime)s %(message)s',
+                        datefmt='%m/%d/%Y %I:%M:%S %p')
     script_dir = os.path.dirname(__file__)
     real_path = 'Test_Output/'
     act_path = os.path.join(script_dir, real_path)
     if not os.path.exists(act_path):
         os.makedirs(act_path)
-    filename = filename[0:-4] + '.json'
-    act_path = os.path.join(act_path, filename)
+    filename = filename[0:-4]
+    act_path = os.path.join(act_path, filename+'.json')
     file = open(act_path, 'w')
     data = json.dumps(outdata)
     file.write(data)
     file.close()
+    logging.info('Parameter successfully generated for file '+filename)
     return 1
