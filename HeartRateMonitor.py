@@ -10,6 +10,13 @@ import logging
 import os
 import numpy as np
 
+
+def check_num(numstring):
+    try:
+        float(numstring)
+        return True
+    except ValueError:
+        return False
 if __name__ == "__main__":
     logging.basicConfig(filename="mainlog.txt",
                         format='%(asctime)s %(message)s',
@@ -18,6 +25,9 @@ if __name__ == "__main__":
                      ' to be evaluated. Enter -1 to scan all data. ')
     time = input('please define the time for bpm '
                  'calculation. ')
+    while not check_num(time):
+        time = input('Wrong input for time, please type in'
+                     'the specified time again: ')
     filelist = hrm_findfile(filename)
     for i in filelist:
         raw_data = hrm_Input(i)

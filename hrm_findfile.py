@@ -27,7 +27,7 @@ def hrm_findfile(filename=-1):
             filelist.append(filename)
         else:
             logging.error('Specified file not exist')
-            raise ImportError('The specified name of the file cannot be find')
+            raise ValueError('The specified name of the file cannot be find')
     if len(filelist) == 0:
         logging.error('No valid file found under directory')
         raise ImportError('No valid data file in Test_/'
