@@ -1,17 +1,19 @@
 def find_peak(data):
     import numpy as np
     import scipy.signal as sci
+    import logging
+    logging.basicConfig(filename="mainlog.txt",
+                        format='%(asctime)s %(message)s',
+                        datefmt='%m/%d/%Y %I:%M:%S %p')
     time = data[(slice(None), 0)]
     voltage = data[(slice(None), 1)]
     maxv = np.max(voltage)
     minv = np.min(voltage)
     voltage = sci.savgol_filter(voltage, 3, 2)
     histv = np.histogram(voltage, bins=10)
-    print(histv)
     revflag = 0
     if np.argmax(histv[0]) > np.average(histv[0], weights=histv[1][0:-1]):
         revflag = 1
-        print('rev')
         threv = maxv - (maxv - minv) * 2 / 3
         lowflag = (voltage > threv)
         voltage = -voltage
@@ -60,4 +62,15 @@ def find_peak(data):
                     finalpeak.append(peak[i])
     else:
         finalpeak = peak
+    if len(finalpeak) == 0:
+        logging.debug('The algorithm failed to find peaks within '
+                      'given data. Please check the data file to'
+                      ' make sure it is a valid ECG data. If it is, '
+                      'Better algorithm for this program to find peaks '
+                      'is under development.')
+        raise ValueError('The algorithm failed to find peaks within'
+                         ' given data. Please check the data file to'
+                         ' make sure it is a valid ECG data. If it is, '
+                         'Better algorithm for this program to find peaks '
+                         'is under development.')
     return finalpeak
