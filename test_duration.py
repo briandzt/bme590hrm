@@ -20,5 +20,5 @@ def test_hrm_duration(truegroup):
         "num_beats": 0,
         "beats": [],
     }
-    result = hrm_duration(truegroup[0],metrics)
+    result = hrm_duration(truegroup[0], metrics)
     assert result["duration"] == truegroup[1]
