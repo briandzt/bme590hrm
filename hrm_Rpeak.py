@@ -6,10 +6,10 @@ def find_peak(data):
     maxv = np.max(voltage)
     minv = np.min(voltage)
     voltage = sci.savgol_filter(voltage, 3, 2)
-    histv = np.histogram(voltage,bins=10)
+    histv = np.histogram(voltage, bins=10)
     print(histv)
     revflag = 0
-    if np.argmax(histv[0]) > np.average(histv[0],weights=histv[1][0:-1]):
+    if np.argmax(histv[0]) > np.average(histv[0], weights=histv[1][0:-1]):
         revflag = 1
         print('rev')
         threv = maxv - (maxv - minv) * 2 / 3
@@ -46,7 +46,7 @@ def find_peak(data):
         finalpeak = []
         for i in range(peakv.size):
             if not peakv[i] < (np.mean(peakv)-np.std(peakv)):
-                if (i!= 0 and i != peakv.size-1):
+                if (i != 0 and i != peakv.size-1):
                     t1 = peak[i][0]-peak[i-1][0]
                     t2 = peak[i+1][0]-peak[i][0]
                     if t1/t2 <= 1.1:
@@ -54,7 +54,7 @@ def find_peak(data):
                 elif i == 0:
                     t1 = peak[i][0]-peak[i+1][0]
                     t2 = peak[i+1][0]-peak[i+2][0]
-                    if t1/t2 >= 1.1 :
+                    if t1/t2 >= 1.1:
                         finalpeak.append(peak[i])
                 else:
                     finalpeak.append(peak[i])
