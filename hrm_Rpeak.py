@@ -1,13 +1,22 @@
 def find_peak(data):
     import numpy as np
     import scipy.signal as sci
-    time = np.array([i[0] for i in data])
-    voltage = np.array([i[1] for i in data])
+    time = data[(slice(None), 0)]
+    voltage = data[(slice(None), 1)]
     maxv = np.max(voltage)
     minv = np.min(voltage)
     voltage = sci.savgol_filter(voltage, 3, 2)
-    threv = (maxv-minv)*2/3+minv
-    lowflag = (voltage < threv)
+    histv = np.histogram(voltage)
+    revflag = 0
+    if np.argmax(histv[0]) > (histv[0].size*0.5):
+        revflag = 1
+        print('rev')
+        threv = maxv - (maxv - minv) * 2 / 3
+        lowflag = (voltage > threv)
+        voltage = -voltage
+    else:
+        threv = (maxv - minv) * 2 / 3 + minv
+        lowflag = (voltage < threv)
     voltage[lowflag] = 0
     peak = []
     for i in range(voltage.size):
@@ -27,13 +36,27 @@ def find_peak(data):
                 if flag < 0:
                     score += 1
             if score >= 2:
-                peak.append([time[i], voltage[i]])
+                if revflag == 1:
+                    peak.append([time[i], -voltage[i]])
+                else:
+                    peak.append([time[i], voltage[i]])
     peakv = np.array([i[1] for i in peak])
     if (np.std(peakv) > 0.1*np.mean(peakv)):
         finalpeak = []
         for i in range(peakv.size):
             if not peakv[i] < (np.mean(peakv)-np.std(peakv)):
-                finalpeak.append(peak[i])
+                if (i!= 0 and i != peakv.size-1):
+                    t1 = peak[i][0]-peak[i-1][0]
+                    t2 = peak[i+1][0]-peak[i][0]
+                    if t1/t2 <= 1.1:
+                        finalpeak.append(peak[i])
+                elif i == 0:
+                    t1 = peak[i][0]-peak[i+1][0]
+                    t2 = peak[i+1][0]-peak[i+2][0]
+                    if t1/t2 >= 1.1 :
+                        finalpeak.append(peak[i])
+                else:
+                    finalpeak.append(peak[i])
     else:
         finalpeak = peak
     return finalpeak
