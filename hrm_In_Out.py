@@ -19,8 +19,8 @@ def hrm_Input(filename):
         raise ValueError("The selected file has no valid data entry")
     if my_data.size < (previous_size / 2):
         warnings.warn('Over 50% of the entries within the data is unreadable')
-    print('The number of entries of {0} /'
-          'is: {1}'.format(filename,my_data.size))
+    print('INFO: Assigning {0} sets of data to /'
+          'from {1}'.format(my_data.size, filename))
     return my_data
 
 
