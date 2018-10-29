@@ -19,5 +19,5 @@ def test_num_beats(truegroup):
         "num_beats": 0,
         "beats": [],
     }
-    result = hrm_num_beats(truegroup[0],metrics)
+    result = hrm_num_beats(truegroup[0], metrics)
     assert result["num_beats"] == truegroup[1]

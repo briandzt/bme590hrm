@@ -10,7 +10,6 @@ import numpy as np
                                        (np.array([[0.5, 0]]),
                                         0.5),
                                        ])
-
 def test_hrm_duration(truegroup):
     from hrm_duration import hrm_duration
     metrics = {
@@ -20,5 +19,5 @@ def test_hrm_duration(truegroup):
         "num_beats": 0,
         "beats": [],
     }
-    result = hrm_duration(truegroup[0],metrics)
+    result = hrm_duration(truegroup[0], metrics)
     assert result["duration"] == truegroup[1]
