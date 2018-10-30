@@ -1,15 +1,15 @@
 def find_peak(data):
     import numpy as np
-    import scipy.signal as sci
+    import scipy.signal
     import logging
     logging.basicConfig(filename="mainlog.txt",
                         format='%(asctime)s %(message)s',
                         datefmt='%m/%d/%Y %I:%M:%S %p')
-    time = data[(slice(None), 0)]
-    voltage1 = data[(slice(None), 1)]
+    time = data[:, 0]
+    voltage1 = data[:, 1]
     maxv = np.max(voltage1)
     minv = np.min(voltage1)
-    voltage = sci.savgol_filter(voltage1, 3, 2)
+    voltage = scipy.signal.savgol_filter(voltage1, 3, 2)
     histv = np.histogram(voltage1, bins=10)
     revflag = 0
     if sum(histv[0][0:5]) < sum(histv[0][5:10]):
