@@ -1,4 +1,29 @@
-def hrm_findfile(filename=-1):
+def hrm_findfile(filename='-1'):
+    """Search the Test_data directory for specified or valid ECG
+       data csv file and return a list containing their names
+
+    Parameters
+    ----------
+    filename: str
+        User defined name of the data file to be processed. The
+        name can either or not contain .csv extension. -1 means
+        to scan all valid data file within the directory
+
+    Returns
+    -------
+    filelist: list
+        List containing names of specified ECG data or all valid
+        ECG data in the directory if input filename is -1
+
+    Raises
+    ------
+    ValueError
+        if input file name cannot be find
+
+    ImportError
+        if no vaild file can be found within the directory
+
+    """
     import os
     import glob
     import warnings
@@ -11,7 +36,7 @@ def hrm_findfile(filename=-1):
     real_path = 'Test_data'
     act_path = os.path.join(script_dir, real_path)
     filelist = []
-    if filename == -1 or filename == '-1':
+    if filename == '-1':
         script_dir = os.path.dirname(__file__)
         real_path = 'Test_data'
         act_path = os.path.join(script_dir, real_path)

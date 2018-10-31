@@ -1,4 +1,26 @@
 def hrm_Input(filename):
+    """Takes in the name of the file and convert data
+       in the file to a numpy array.
+
+    Parameters
+    ----------
+    filename: str
+        A string with the name and extension
+
+    Returns
+    -------
+    mydata: ndarry(dtype=float, ndim=2)
+        [[time, voltage]]
+        Array containing the whole ECG script with voltage and related time
+
+    Raises
+    ------
+    ValueError:
+        If no entries in the ECG script is complete, either miss time
+        or voltage value
+        If all entries in the ECG script has the same voltage value
+
+    """
     import logging
     import numpy as np
     import warnings
@@ -37,6 +59,28 @@ def hrm_Input(filename):
 
 
 def hrm_Output(outdata, filename):
+    """Takes in name of raw data file and related dictionary
+       with calculated metrics. Store the dictionary into a
+       json file with the name of raw data file.
+
+    Parameters
+    ----------
+    outdata: dict
+        "mean_hr_bpm": float
+        "voltage_extremes": tuple
+        "duration": float
+        "num_beats": int
+        "beats": list
+        dictionary used to store metrics of ECG data
+
+    filename: str
+        Name of the raw data file
+
+    Returns
+    -------
+    1 if the function progresses to the end
+
+    """
     import json
     import os
     import logging

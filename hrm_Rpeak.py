@@ -1,4 +1,24 @@
 def find_peak(data):
+    """Function that takes raw ECG data and return a numpy array containing
+       voltage and time of Rpeaks within the data.
+
+    Parameters
+    ----------
+    data: ndarry(dtype=float, ndim=2)
+        [[time, voltage]]
+        Array containing the whole ECG script with voltage and related time
+
+    Returns
+    -------
+    finalpeak: list
+        List containing the voltage and time of each Rpeak
+
+    Raises
+    ------
+    ValueError:
+        if zero peaks are found by the function
+
+    """
     import numpy as np
     import scipy.signal
     import logging
