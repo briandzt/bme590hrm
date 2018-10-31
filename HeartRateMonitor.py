@@ -12,11 +12,26 @@ import numpy as np
 
 
 def check_num(numstring):
+    """Verify whether input string can be converted to float
+
+    Parameters
+    ----------
+    numstring: str
+        String input by user specifying time for calculating bpm
+
+    Returns
+    -------
+    flag: bool
+        boolean indicating the user input is a valid number or not
+
+    """
+    flag = True
     try:
         float(numstring)
-        return True
+        return flag
     except ValueError:
-        return False
+        flag = False
+        return flag
 if __name__ == "__main__":
     logging.basicConfig(filename="mainlog.txt",
                         format='%(asctime)s %(message)s',

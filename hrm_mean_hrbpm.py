@@ -1,4 +1,31 @@
 def hrm_mean_hrbpm(peak, metrics, time=-1):
+    """Take in list of peak voltage and related time point as well as the
+       specified time. Calculate the bpm, store into the given dictionary
+       and return the same dictionary.
+
+    Parameters
+    ----------
+    peak: ndarry(dtype=float, ndim=2)
+        [[time, voltage]]
+        Array containing peaks of ECG script with voltage and related time.
+
+    metrics:dict
+        "mean_hr_bpm": float
+        "voltage_extremes": tuple
+        "duration": float
+        "num_beats": int
+        "beats": list
+        dictionary used to store metrics of ECG data
+
+    time: str
+        User specified time used as the time interval for bpm calculation.
+
+    Returns
+    -------
+    metrics: dict
+    same dictionary as in parameters with updated "beats" entry
+
+    """
     import numpy as np
     import warnings
     import logging
